@@ -560,13 +560,17 @@ var AddPageMixin = {
 					if(submitAction == 'submit'){
 						self.saving = true;
 						self.$http.post( url , payload , {emulateJSON:true} ).then(function (response) {
+							console.log(response);
 							self.id = response.body
 							self.saving = false
 							self.resetForm();
 							self.actionAfterSave(response);
 						},
+
+				
 						function (response) {
 							self.saving = false;
+							console.error(response);
 							self.$root.$emit('requestError' , response);
 						});
 					}
