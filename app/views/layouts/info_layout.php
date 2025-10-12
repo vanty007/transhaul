@@ -32,8 +32,8 @@
 	<link rel="stylesheet" href="../lib/css/style.css" media="screen">
 
 	<!--Favicon-->
-	<link rel="shortcut icon" href="lib/images/favicon.png" type="image/x-icon">
-	<link rel="icon" href="lib/images/favicon.png" type="image/x-icon">
+	<link rel="shortcut icon" href="/lib/images/favicon.png" type="image/x-icon">
+	<link rel="icon" href="/lib/images/favicon.png" type="image/x-icon">
 </head>
 
 <body>
