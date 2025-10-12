@@ -1,612 +1,639 @@
 <template id="Home">
   <div>
 
-  <?php
-			if(ROLE_ID=="user" ){
-		?>
-			<div id="openPaymentModal" class="modal fade" role="dialog">
-				<div class="modal-dialog">
+    <?php if (ROLE_ID == "user") { ?>
 
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
+      <div id="openPaymentModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
               <h4 class="modal-title">Pay for this Pick Up</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body" style="display: grid;justify-content: center;align-items: center;">
-                <div class="container">
-                    <div class="row ">
-                        <div  class="col-md-7 comp-grid" :class="setGridSize">
-                            <div  class=" animated fadeIn">
-                                  <form class="form form-default" name="submitPayment" action="<?php print_link('Payments/add'); ?>" @submit.prevent="submitPayment()" method="post">
-                                    <div class="form-group " :class="{'has-error' : errors.has('picture')}">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <label class="control-label" for="picture">Upload Payment Prove <span class="text-danger">*</span></label>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <div class="">
-                                                    <niceupload
-                                                        fieldname="picture"
-                                                        control-class="upload-control"
-                                                        dropmsg="Drop files here to upload"
-                                                        uploadpath="uploads/files/"
-                                                        filenameformat="random" 
-                                                        :filesize="3" 
-                                                        :maximum="1" 
-                                                        name="picture"
-                                                        v-model="user.picture"
-                                                        v-validate="{required:true}"
-                                                        data-vv-as="Picture"
-                                                        >
-                                                    </niceupload>
-                                                    <small v-show="errors.has('picture')" class="form-text text-danger">{{ errors.first('picture') }}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group " :class="{'has-error' : errors.has('payment_method')}">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <label class="control-label" for="payment_method">Payment Method <span class="text-danger">*</span></label>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <div class="">
-                                                    <dataselect
-                                                        v-model="user.payment_method"
-                                                        data-vv-value-path="user.payment_method"
-                                                        data-vv-as="Payment Method"
-                                                        v-validate="{required:true}"
-                                                        placeholder="Select A Payment Method ... " name="payment_method" :multiple="false" 
-                                                        :datasource="payment_methodOptionList"
-                                                        >
-                                                    </dataselect>
-                                                    <small v-show="errors.has('payment_method')" class="form-text text-danger">{{ errors.first('payment_method') }}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group text-center">
-                                        <button class="btn btn-primary"  :disabled="errors.any()" type="submit">
-                                            <i class="load-indicator">
-                                                <clip-loader :loading="loading" color="#fff" size="14px"></clip-loader>
-                                            </i>
-                                            Submit
-                                            <i class="fa fa-send"></i>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-
-				</div>
-			</div>
-    <div class="banner text-center">
-        <div class="container">
-          <div class="row">
-              <div class="col-lg-9 mx-auto">
-                <h1 class="mb-5">What Would You <br> Like To Pick Up Today?</h1>
-              </div>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="display: grid;justify-content: center;align-items: center;">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
-        <svg class="banner-shape-1" width="39" height="40" viewBox="0 0 39 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.965848 20.6397L0.943848 38.3906L18.6947 38.4126L18.7167 20.6617L0.965848 20.6397Z" stroke="#040306"
-              stroke-miterlimit="10" />
-          <path class="path" d="M10.4966 11.1283L10.4746 28.8792L28.2255 28.9012L28.2475 11.1503L10.4966 11.1283Z" />
-          <path d="M20.0078 1.62949L19.9858 19.3804L37.7367 19.4024L37.7587 1.65149L20.0078 1.62949Z" stroke="#040306"
-              stroke-miterlimit="10" />
-        </svg>
-        <svg class="banner-shape-2" width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g filter="url(#filter0_d)">
-              <path class="path"
-                d="M24.1587 21.5623C30.02 21.3764 34.6209 16.4742 34.435 10.6128C34.2491 4.75147 29.3468 0.1506 23.4855 0.336498C17.6241 0.522396 13.0233 5.42466 13.2092 11.286C13.3951 17.1474 18.2973 21.7482 24.1587 21.5623Z" />
-              <path
-                d="M5.64626 20.0297C11.1568 19.9267 15.7407 24.2062 16.0362 29.6855L24.631 29.4616L24.1476 10.8081L5.41797 11.296L5.64626 20.0297Z"
-                stroke="#040306" stroke-miterlimit="10" />
-          </g>
-          <defs>
-              <filter id="filter0_d" x="0.905273" y="0" width="37.8663" height="38.1979" filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                <feOffset dy="4" />
-                <feGaussianBlur stdDeviation="2" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-              </filter>
-          </defs>
-        </svg>
-    </div>
-    <div class="text-center">
-        <router-link to="/pickup_request/add" class="btn btn-success">New Pick Up Request <i class="fa fa-solid fa-truck"></i></router-link>
-    </div>
-    <section class="section-sm">
+      </div>
+
+      <section class="hero-section">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6 hero-content order-2 order-lg-1 text-center text-lg-left">
+              <p class="welcome-text">Welcome to Your Dashboard <?php echo get_session('user_data')['firstname']; ?>!</p>
+              <h1 class="hero-headline">
+                Fastest Delivery <br />
+                <span class="highlight-text">Easy Pickup</span>
+              </h1>
+              <p class="hero-subheadline">
+                Quickly request a new pickup or track an existing delivery. Fast, simple, and reliable service right here in Jos.
+              </p>
+              <div class="mt-4">
+                <router-link to="/pickup_request/add" class="btn btn-primary btn-lg px-5 py-3">Request a New Pickup</router-link>
+              </div>
+            </div>
+            <div class="col-lg-6 hero-image-container order-1 order-lg-2 mb-5 mb-lg-0">
+              <div class="delivery-illustration">
+                <img src="assets/images/hero-user1.png" alt="Delivery Illustration" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="how-it-work-section py-5">
+        <div class="custom-shape-divider-bottom-1760106560">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+          </svg>
+        </div>
+        <div class="container">
+          <h2 class="text-center mb-5">How It Works</h2>
+          <div class="row text-center">
+            <div class="col-md-4 col-sm-12 mb-4">
+              <div class="how-it-work-item">
+                <div class="icon-circle mb-3"><i class="ti-pencil-alt"></i></div>
+                <h4>1. Make a Request</h4>
+                <p class="text-muted">Fill in your pickup and delivery details in our simple form.</p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 mb-4">
+              <div class="how-it-work-item">
+                <div class="icon-circle mb-3"><i class="ti-truck"></i></div>
+                <h4>2. Rider Dispatched</h4>
+                <p class="text-muted">A nearby rider is assigned and heads to your location for pickup.</p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12 mb-4">
+              <div class="how-it-work-item">
+                <div class="icon-circle mb-3"><i class="ti-map-alt"></i></div>
+                <h4>3. Track Your Item</h4>
+                <p class="text-muted">Follow your delivery in real-time until it safely reaches its destination.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-sm" style="background-color: #f7f9fc;">
         <div class="container">
           <div class="widget">
-              <h4 class="widget-title">Recent Requests</h4>
-              <!-- post-item -->
-              <div v-if="records.length">
-                <div v-for="(data,index) in records">
-                <article class="widget-card" v-if="(data.records.pickup_status == 0 ||data.records.pickup_status == 1)">
-                    <div class="d-flex">
-                      <div class="row">
-                        <div class="col-md-3">
-                        <router-link  title="View Record" :to="'/pickup_request/view/' + data.records.id">
-                            <img class="card-img-sm" :src="data.records.image || 'assets/images/carts.jpg'"  style="justify-content: center;align-items: center;border-radius: 50px;width: 120px;height: 120px;margin: 0 auto;overflow: hidden;object-fit: fill;display: block;margin: auto;">
-                        </router-link>
-                        </div>
-                        <div class="col-md-9">
-                        <div class="ml-3" style="margin-right:100px;">
-                        <div class="row">
-                        <div class="col-md-12">
-                            <h5><a class="post-title">{{data.records.item_name}}</a></h5>
-                            <i class="fa fa-solid fa-calendar"></i> {{data.records.created_at}}</br>
-                            <i class="fa fa-solid fa-map-marker" style="color:#077A07"></i> {{data.records.pickup_address}}, {{data.records.pickup_city}}, {{data.records.pickup_state}}
-                            <div>|</div>
-                            <i class="fa fa-flag" style="color:#B50202"></i> {{data.records.receiver_address}}, {{data.records.receiver_city}}, {{data.records.receiver_state}}
-                            </br>
-                            <span style="font-weight: bold;"><i class="fa fa-street-view" aria-hidden="true"></i>Tracking No: {{data.records.tracking_id}}</span>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-12">
-                              <ul class="card-meta list-inline">
-                                <li class="list-inline-item">
-                                    <a class="card-meta-author" v-if="data.records.driver_id == null">
-                                    <span><i class="fa fa-user"></i> Rider Pending</span>
-                                    </a>
-                                    <a :href="'#riders_availability/view/'+data.records.driver_id" class="card-meta-author" v-if="data.records.driver_id != null">
-                                    <span><i class="fa fa-user"></i> {{data.records.firstname}} {{data.records.lastname}} 
-                                    <i class="fa fa-phone" style="font-size:14px;color:#077A07"></i><a :href="'tel: '+ data.records.phoneno"> {{data.records.phoneno}}</a> 
-                                    </span>
-                                    </a>
-                                </li>
-                              </ul>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-12">
-                          <li class="list-inline-item">
-                          <li class="list-inline-item"><i class="fa fa-road"></i>{{data.records.distance}} KM</li>
-                            <ul class="card-meta-tag list-inline" v-if="data.records.pickup_status == 0 && data.records.driver_id == null">
-                              <li class="list-inline-item" style="color:red;">Processing</li>
-                              <li @click="cancelPickup(data.records.id)" class="list-inline-item"><a>Cancel Pick Up <i class="fa fa-ban"></i></a></li>
-                            </ul>
-                            <!--<ul class="card-meta-tag list-inline" v-if="data.records.payment_status == 0 && data.payments == false && data.records.driver_id != null">
-                              <li class="list-inline-item" style="color:red;">Pending Payment</li>
-                              <li class="list-inline-item" @click="showPopOpenPaymentModal(data.records)"><a>Make Payment <i class="fa fa-money-bill"></i></a></li>
-                            </ul>-->
-                            <ul class="card-meta-tag list-inline" v-if="data.records.pickup_status == 1">
-                              <li class="list-inline-item" style="color:red;">Pending Pick Up</li>
-                            </ul>
-                            <ul class="card-meta-tag list-inline" v-if="data.records.pickup_status == 2">
-                              <li class="list-inline-item" style="color:red;">In Transit</li>
-                            </ul>
-                            <ul class="card-meta-tag list-inline" v-if="data.records.pickup_status == 3">
-                              <li class="list-inline-item" style="color:red;">Delivered</li>
-                              <li class="list-inline-item"><a>Rate Delivery<i class="fa fa-star"></i></a></li>
-                            </ul>
-                          </li>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                      </div>
-                      <!--<li class="list-inline-item"><a href="tags.html" style="float:right;">Demo</a></li>-->
-                    </div>
-                </article>
-                </div>
-
-                <ul class="pagination justify-content-center">
-                    <li class="page-item page-item active ">
-                      <a href="#!" class="page-link">1</a>
-                    </li>
-                    <li class="page-item">
-                      <a href="#!" class="page-link">2</a>
-                    </li>
-                    <li class="page-item">
-                      <a href="#!" class="page-link">&raquo;</a>
-                    </li>
-                </ul>
-              </div>
-                  <div class="row justify-content-center" v-else>
-                    <div class="col-sm-12 text-center">
-                      <img src="lib/images/no-search-found.png" alt=""  style="object-fit: cover;width:200px;height:200px;">
-                      <h3>No Search Found</h3>
-                    </div>
-                  </div>
-          </div>
-        </div>
-    </section>
-    <?php
-      }
-    else if(ROLE_ID=="driver" ){
-    ?>
-			<div id="openPaymentInfoModal" class="modal fade" role="dialog">
-				<div class="modal-dialog">
-
-					<div class="modal-content">
-						<div class="modal-header">
-              <h4 class="modal-title">Confirm Payment</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body" style="display: grid;justify-content: center;align-items: center;">
-              <div class="row justify-content-center" v-if="paymentsinfo==false">
-                <div class="col-sm-12 text-center">
-                  <img src="lib/images/no-search-found.png" alt=""  style="object-fit: cover;width:200px;height:200px;">
-                  <h3>No Payment made yet</h3>
-                </div>
-              </div>
-              <div class="row justify-content-center" v-else>
-                <div class="col-sm-12 text-center">
-                  <img :src="paymentsinfo.picture" alt=""  style="object-fit: cover;width:200px;height:200px;">
-                  <button class="btn btn-primary"  type="button">Confirm<i class="fa fa-send"></i></button>
-                </div>
-              </div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-
-				</div>
-			</div>
-
-<div class="banner text-center">
-        <div class="container">
-          <div class="row">
-              <div class="col-lg-9 mx-auto">
-                <h1 class="mb-5">Watchout for <br>Today's Pick Up</h1>
-              </div>
-          </div>
-        </div>
-        <svg class="banner-shape-1" width="39" height="40" viewBox="0 0 39 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.965848 20.6397L0.943848 38.3906L18.6947 38.4126L18.7167 20.6617L0.965848 20.6397Z" stroke="#040306"
-              stroke-miterlimit="10" />
-          <path class="path" d="M10.4966 11.1283L10.4746 28.8792L28.2255 28.9012L28.2475 11.1503L10.4966 11.1283Z" />
-          <path d="M20.0078 1.62949L19.9858 19.3804L37.7367 19.4024L37.7587 1.65149L20.0078 1.62949Z" stroke="#040306"
-              stroke-miterlimit="10" />
-        </svg>
-        <svg class="banner-shape-2" width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g filter="url(#filter0_d)">
-              <path class="path"
-                d="M24.1587 21.5623C30.02 21.3764 34.6209 16.4742 34.435 10.6128C34.2491 4.75147 29.3468 0.1506 23.4855 0.336498C17.6241 0.522396 13.0233 5.42466 13.2092 11.286C13.3951 17.1474 18.2973 21.7482 24.1587 21.5623Z" />
-              <path
-                d="M5.64626 20.0297C11.1568 19.9267 15.7407 24.2062 16.0362 29.6855L24.631 29.4616L24.1476 10.8081L5.41797 11.296L5.64626 20.0297Z"
-                stroke="#040306" stroke-miterlimit="10" />
-          </g>
-          <defs>
-              <filter id="filter0_d" x="0.905273" y="0" width="37.8663" height="38.1979" filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                <feOffset dy="4" />
-                <feGaussianBlur stdDeviation="2" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-              </filter>
-          </defs>
-        </svg>
-    </div>
-    <div class="text-center">
-        <button @click="driverStatus(2)" class="btn btn-success" v-if="driver_status==1">Make me Offline <i class="fa fa-solid fa-toggle-off"></i></button>
-        <button @click="driverStatus(1)" class="btn btn-success" v-if="driver_status==2">Make me Online <i class="fa fa-solid fa-toggle-on"></i></button>
-    </div>
-    <section class="section-sm">
-        <div class="container">
-          <div class="widget">
-              <h4 class="widget-title">PickUp Requests</h4>
-              <!-- post-item -->
-              <div v-if="records.length">
+            <h4 class="widget-title">Active Requests</h4>
+            <div v-if="records.length">
               <div v-for="(data,index) in records">
-                <article class="widget-card" v-if="(data.records.pickup_status == 0 ||data.records.pickup_status == 1) && driver_status==1 && data.records.driver_id == <?php echo USER_ID; ?>">
-                    <div class="d-flex">
-                      <div class="row">
-                        <div class="col-md-3">
-                        <router-link  title="View Record" :to="'/pickup_request/view/' + data.records.id">
-                            <img class="card-img-sm" :src="data.records.picture || 'assets/images/carts.jpg'" style="justify-content: center;align-items: center;border-radius: 50px;width: 120px;height: 120px;margin: 0 auto;overflow: hidden;object-fit: fill;display: block;margin: auto;">
-                        </router-link>
-                        </div>
-                        <div class="col-md-9">
-                        <div class="ml-3" style="margin-right:100px;">
-                        <div class="row">
-                        <div class="col-md-12">
-                            <h5><a class="post-title">{{data.records.item_name}}</a></h5>
-                            <i class="fa fa-solid fa-calendar"></i> {{data.records.created_at}}</br>
-                            <i class="fa fa-solid fa-map-marker" style="color:#077A07"></i> {{data.records.pickup_address}}, {{data.records.pickup_city}}, {{data.records.pickup_state}}
-                            <div>|</div>
-                            <i class="fa fa-flag" style="color:#B50202"></i> {{data.records.receiver_address}}, {{data.records.receiver_city}}, {{data.records.receiver_state}}
-                            </br>
-                            <span style="font-weight: bold;"><i class="fa fa-street-view" aria-hidden="true"></i>Tracking No: {{data.records.tracking_id}}</span>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-12">
-                            <ul class="card-meta list-inline">
-                                <li class="list-inline-item">
-                                    <a class="card-meta-author" v-if="data.records.pickup_status == 0">
-                                    <span><i class="fa fa-solid fa-truck"></i> Rider Pending</span>
-                                    </a>
-                                    <a href="author-single.html" class="card-meta-author" v-if="data.records.pickup_status == 1">>
-                                    <span><i class="fa fa-solid fa-truck"></i> Transit to Pickupss</span>
-                                    </a>
-                                </li>
-                              </ul>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-12">
-                          <li class="list-inline-item">
-                          <li class="list-inline-item"><i class="fa fa-road"></i>{{data.records.distance}} KM</li>
-                              <li class="list-inline-item">
-                                  <ul class="card-meta-tag list-inline">
-                                    <li class="list-inline-item" v-if="data.records.pickup_status == 0" style="color:red;">Pick Up Assigned</li>
-                                    <li class="list-inline-item" v-if="data.records.pickup_status == 0" @click="acceptPickup(data.records.id)"><a>Accept <i style="color:green;" class="fa fa-check"></i></a></li>
-                                    <li class="list-inline-item" v-if="data.records.pickup_status == 0" @click="rejectPickup(data.records.id)"><a>Reject <i style="color:red;" class="fa fa-times"></i></a></li>
-                                    
-                                    <li class="list-inline-item" v-if="data.records.pickup_status == 1" style="color:red;">Pickup Accepted</li>
-                                    <li class="list-inline-item" v-if="data.records.pickup_status == 1" @click="startPickup(data.records.id)"><a>Start Journey<i style="color:green;" class="fa fa-shopping-basket"></i></a></li>
-                                    <li class="list-inline-item" v-if="data.records.pickup_status == 1 && data.records.payment_status == 0" @click="confirmPayment(data.records.id)"><a>Confirm Payment<i style="color:green;" class="fa fa-money"></i></a></li>
-                              
-                                  </ul>
-                              </li>
-                          </li>
-                        </div>
-                        </div>
-                        </div>
+                <article class="card request-card mb-4" v-if="(data.records.pickup_status == 0 || data.records.pickup_status == 1)">
+                  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="ti-package mr-2"></i> {{data.records.item_name}}</h5>
+                    <span class="badge badge-light p-2">#{{data.records.tracking_id}}</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="location-group">
+                          <div class="location-icon from"><i class="ti-location-pin"></i></div>
+                          <div>
+                            <small class="text-muted">FROM</small>
+                            <p class="font-weight-bold mb-0">{{data.records.pickup_city}}, {{data.records.pickup_state}}</p>
+                          </div>
                         </div>
                       </div>
-                      <!--<li class="list-inline-item"><a href="tags.html" style="float:right;">Demo</a></li>-->
-                    </div>
-                </article>
-              </div>
-              </div> 
-                  <div class="row justify-content-center" v-else>
-                    <div class="col-sm-12 text-center">
-                      <img src="lib/images/no-search-found.png" alt=""  style="object-fit: cover;width:200px;height:200px;">
-                      <h3>No Search Found</h3>
+                      <div class="col-md-2 text-center my-3 my-md-0">
+                        <i class="ti-arrow-right text-muted" style="font-size: 1.5rem;"></i>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="location-group">
+                          <div class="location-icon to"><i class="ti-flag-alt"></i></div>
+                          <div>
+                            <small class="text-muted">TO</small>
+                            <p class="font-weight-bold mb-0">{{data.records.receiver_city}}, {{data.records.receiver_state}}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item page-item active ">
-                      <a href="#!" class="page-link">1</a>
-                    </li>
-                    <li class="page-item">
-                      <a href="#!" class="page-link">2</a>
-                    </li>
-                    <li class="page-item">
-                      <a href="#!" class="page-link">&raquo;</a>
-                    </li>
-                </ul>
-
+                  <div class="card-footer d-flex justify-content-between align-items-center">
+                    <div class="status-group">
+                      <strong class="mr-2">Status:</strong>
+                      <span v-if="data.records.pickup_status == 0 && data.records.driver_id == null">Processing</span>
+                      <span v-if="data.records.pickup_status == 1">Pending Pickup</span>
+                    </div>
+                    <div class="action-group" style="white-space: nowrap;">
+                      <a @click="cancelPickup(data.records.id)" href="#" class="btn btn-xs btn-outline-danger" v-if="data.records.pickup_status == 0 && data.records.driver_id == null">
+                        <i class="ti-na"></i> Cancel
+                      </a>
+                      <router-link :to="'/pickup_request/view/' + data.records.id" class="btn btn-xs btn-outline-primary">
+                        <i class="ti-eye"></i> View Details
+                      </router-link>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <div class="row justify-content-center" v-else>
+              <div class="col-sm-12 text-center py-5">
+                <div class="empty-state-card">
+                  <div class="icon-circle mb-3" style="background-color: #f0f0f0;"><i class="ti-dropbox" style="color: #aaa;"></i></div>
+                  <h3 class="mt-3">No Active Requests Found</h3>
+                  <p class="text-muted">Ready to send something? Click the button in the banner above!</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-    </section>
+      </section>
 
-        <?php
-      }
-      ?>
+    <?php } else if (ROLE_ID == "driver") { ?>
+
+      <div id="openPaymentInfoModal" class="modal fade" role="dialog"></div>
+
+      <section class="hero-section">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6 hero-content order-2 order-lg-1 text-center text-lg-left">
+              <p class="welcome-text">Hello <?php echo get_session('user_data')['firstname']; ?>!</p>
+              <h1 class="hero-headline">
+                Ready For Your <br />
+                <span class="highlight-text">Next Pickup?</span>
+              </h1>
+              <p class="hero-subheadline">
+                Toggle your status to start receiving new pickup requests. Your available jobs will appear below.
+              </p>
+              <div class="mt-4">
+                <button @click="driverStatus(2)" class="btn btn-danger btn-lg px-5 py-3" v-if="driver_status==1">
+                  <i class="ti-na"></i> Go Offline
+                </button>
+                <button @click="driverStatus(1)" class="btn btn-success btn-lg px-5 py-3" v-if="driver_status==2">
+                  <i class="ti-control-play"></i> Go Online
+                </button>
+              </div>
+            </div>
+            <div class="col-lg-6 hero-image-container order-1 order-lg-2 mb-5 mb-lg-0">
+              <div class="delivery-illustration">
+                <img src="assets/images/hero-driver1.png" alt="Rider Illustration" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-sm" style="background-color: #f7f9fc;">
+        <div class="container">
+          <div class="widget">
+            <h4 class="widget-title">Available PickUp Requests</h4>
+            <div v-if="records.length">
+              <div v-for="(data,index) in records">
+                <article class="card request-card mb-4" v-if="(data.records.pickup_status == 0 || data.records.pickup_status == 1) && driver_status==1 && data.records.driver_id == <?php echo USER_ID; ?>">
+                  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="ti-package mr-2"></i> {{data.records.item_name}}</h5>
+                    <span class="badge badge-light p-2"><i class="ti-ruler-alt-2 mr-1"></i> {{data.records.distance}}</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="location-group">
+                          <div class="location-icon from"><i class="ti-location-pin"></i></div>
+                          <div>
+                            <small class="text-muted">FROM</small>
+                            <p class="font-weight-bold mb-0">{{data.records.pickup_city}}, {{data.records.pickup_state}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2 text-center my-3 my-md-0">
+                        <i class="ti-arrow-right text-muted" style="font-size: 1.5rem;"></i>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="location-group">
+                          <div class="location-icon to"><i class="ti-flag-alt"></i></div>
+                          <div>
+                            <small class="text-muted">TO</small>
+                            <p class="font-weight-bold mb-0">{{data.records.receiver_city}}, {{data.records.receiver_state}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-right">
+                    <div v-if="data.records.pickup_status == 0" class="btn-group w-100">
+                      <button @click="rejectPickup(data.records.id)" class="btn btn-outline-danger w-50">Reject</button>
+                      <button @click="acceptPickup(data.records.id)" class="btn btn-success w-50">Accept</button>
+                    </div>
+                    <div v-if="data.records.pickup_status == 1">
+                      <button @click="startPickup(data.records.id)" class="btn btn-info btn-block">Start Journey</button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <div class="row justify-content-center" v-else>
+              <div class="col-sm-12 text-center py-5">
+                <div class="empty-state-card">
+                  <h3 class="mt-3">No Available Requests</h3>
+                  <p class="text-muted">You're all caught up! Stay online to see new requests as they come in.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <?php } ?>
   </div>
 </template>
-        <script>
-			var HomeComponent = Vue.component('HomeComponent', {
-				template : '#Home',
-                mixins: [ListPageMixin],
-				props: {
-			limit : {
-				type : Number,
-				default : defaultPageLimit,
-			},
-			pagename : {
-				type : String,
-				default : 'home',
-			},
-			routename : {
-				type : String,
-				default : 'home',
-			},
-			apipath : {
-				type : String,
-				default : 'home/index',
-			},
-			exportbutton: {
-				type: Boolean,
-				default: false,
-			},
-			importbutton: {
-				type: Boolean,
-				default: false,
-			},
-			tablestyle: {
-				type: String,
-				default: ' table-striped table-sm',
-			},
-		},
-				data : function() {
-					return {
-            pagelimit : defaultPageLimit,
-						loading : false,
-						ready: false,
-            user : {
-              request_id: '',payer: '',picture: '',payment_method: '',
+
+<script>
+  var HomeComponent = Vue.component('HomeComponent', {
+    template: '#Home',
+    mixins: [ListPageMixin],
+    props: {
+      limit: {
+        type: Number,
+        default: defaultPageLimit,
+      },
+      pagename: {
+        type: String,
+        default: 'home',
+      },
+      routename: {
+        type: String,
+        default: 'home',
+      },
+      apipath: {
+        type: String,
+        default: 'home/index',
+      },
+      exportbutton: {
+        type: Boolean,
+        default: false,
+      },
+      importbutton: {
+        type: Boolean,
+        default: false,
+      },
+      tablestyle: {
+        type: String,
+        default: ' table-striped table-sm',
+      },
+    },
+    data: function() {
+      return {
+        pagelimit: defaultPageLimit,
+        loading: false,
+        ready: false,
+        user: {
+          request_id: '',
+          payer: '',
+          picture: '',
+          payment_method: '',
+        },
+        payment_methodOptionList: ["Cash", "Transfer", "POS", "ATM", "QRCODE"],
+        driver_status: 1,
+        paymentsinfo: '',
+      }
+    },
+    computed: {
+      pageTitle: function() {
+        return 'Propertylist';
+      },
+      filterGroupChange: function() {
+        return;
+      },
+    },
+    watch: {
+      allSelected: function() {
+        //toggle selected record
+        this.selected = [];
+        if (this.allSelected == true) {
+          for (var i in this.records) {
+            var id = this.records[i].id;
+            this.selected.push(id);
+          }
+        }
+      },
+    },
+    methods: {
+      showPopOpenPaymentModal: function(data) {
+        this.user.request_id = data.id;
+        this.user.payer = "requester";
+        $('#openPaymentModal').modal();
+      },
+      submitPayment: function(e) {
+        var payload = this.user;
+        this.loading = true;
+        var self = this;
+        var apiurl = setApiUrl('Payments/add');
+        this.$http.post(apiurl, payload, {
+          emulateJSON: true
+        }).then(function(response) {
+            self.loading = false;
+            this.user = {
+              request_id: '',
+              payer: '',
+              picture: '',
+              payment_method: '',
+            };
+            this.$validator.reset();
+            this.load();
+            $('#openPaymentModal').modal("hide");
+          },
+          function(response) {
+            this.loading = false;
+            this.showError = false
+            this.errorMsg = response.statusText;
+            setTimeout(function() {
+              self.showError = true;
+            }, 100);
+          });
+      },
+      load: function() {
+        this.records = [];
+        this.test = [];
+        if (this.loading == false) {
+          this.ready = false;
+          this.loading = true;
+          var url = this.apiUrl;
+          this.$http.get(url).then(function(response) {
+              var data = response.body;
+              console.log(data)
+              if (data && data.records) {
+                this.totalrecords = data.total_records;
+                if (this.pagelimit > data.records.length) {
+                  this.loadcompleted = true;
+                }
+                this.records = data.records;
+                this.driver_status = data.driver_status;
+              } else {
+                console.log(response)
+                this.$root.$emit('requestError', response);
+              }
+              this.loading = false
+              this.ready = true
             },
-            payment_methodOptionList: ["Cash","Transfer","POS","ATM","QRCODE"],
-            driver_status:1,
-            paymentsinfo:'',
-					}
-				},
-		computed : {
-			pageTitle: function(){
-				return 'Propertylist';
-			},
-			filterGroupChange: function(){
-				return ;
-			},
-		},
-		watch : {
-			allSelected: function(){
-				//toggle selected record
-				this.selected = [];
-				if(this.allSelected == true){
-					for (var i in this.records){
-						var id = this.records[i].id;
-						this.selected.push(id);
-					}
-				}
-			},
-		},
-				methods : {
-					showPopOpenPaymentModal: function(data){ 
-					//alert(img)
-					//this.modalimage = img
-          this.user.request_id = data.id;
-          this.user.payer = "requester";
-					$('#openPaymentModal').modal();
-        			},
-			submitPayment : function(e){
-						var payload = this.user;
-						this.loading = true;
-						var self = this;
-						var apiurl = setApiUrl('Payments/add');
-						this.$http.post( apiurl , payload , {emulateJSON:true} ).then(function (response) {
-							self.loading = false;
-							//window.location = response.body;
-              this.user = {request_id: '',payer: '',picture: '',payment_method: '',};
-				      this.$validator.reset();
-              this.load();
-              $('#openPaymentModal').modal("hide");
-							//location.reload();
+            function(response) {
+              this.loading = false;
+              this.$root.$emit('requestError', response);
+            });
+        }
+      },
+      filterGroup: function() {
+        var filters = {};
+        this.filterMsgs = [];
+        this.filter(filters);
+      },
+      rejectPickup: function(id) {
+        var apiurl = setApiUrl('components/rejectPickup/' + id);
+        this.$http.get(apiurl).then(function(response) {
+            console.log(response)
+            this.load()
+          },
+          function(response) {
+            console.log(response)
+          });
+      },
+      acceptPickup: function(id) {
+        var apiurl = setApiUrl('components/acceptPickup/' + id);
+        this.$http.get(apiurl).then(function(response) {
+            console.log(response)
+            this.load()
+          },
+          function(response) {
+            console.log(response)
+          });
+      },
+      startPickup: function(id) {
+        var apiurl = setApiUrl('components/startPickup/' + id);
+        this.$http.get(apiurl).then(function(response) {
+            console.log(response)
+            this.load()
+          },
+          function(response) {
+            console.log(response)
+          });
+      },
+      setPaymentInfo: function(val) {
+        console.log(val)
+        this.paymentsinfo = val;
+        $('#openPaymentInfoModal').modal();
+      },
+      confirmPayment: function(id) {
+        var apiurl = setApiUrl('components/confirmPayment/' + id);
+        this.$http.get(apiurl).then(function(response) {
+            console.log(response)
+            this.load()
+          },
+          function(response) {
+            console.log(response)
+          });
+      },
+      driverStatus: function(id) {
+        var apiurl = setApiUrl('components/driverStatus/' + id);
+        this.$http.get(apiurl).then(function(response) {
+            console.log(response)
+            this.load()
+          },
+          function(response) {
+            console.log(response)
+          });
+      },
+      cancelPickup: function(id) {
+        var apiurl = setApiUrl('components/cancelPickup/' + id);
+        this.$http.get(apiurl).then(function(response) {
+            console.log(response)
+            this.load()
+          },
+          function(response) {
+            console.log(response)
+          });
+      },
+    },
+    mounted: function() {
+      this.ready = true;
+    },
+  });
+</script>
 
-						},
-						function (response) {
-							this.loading = false;
-							this.showError = false
-							this.errorMsg = response.statusText;
-							//Flashes messages
-							setTimeout(function(){
-								self.showError = true;
-							}, 100);
-						});
-					},
-			load:function(){
-				this.records = [];
-				this.test = [];
-				if (this.loading == false){
-					this.ready = false;
-					this.loading = true;
-					var url = this.apiUrl;
-					this.$http.get(url).then(function (response) {
-						var data = response.body;
-						console.log(data)
-						if(data && data.records){
-							this.totalrecords = data.total_records;
-							if(this.pagelimit  > data.records.length){
-								this.loadcompleted = true;
-							}
-							this.records = data.records;
-              this.driver_status = data.driver_status;
-							
-							//foo();
-							
-						}
-						else{
-							console.log(response)
-							this.$root.$emit('requestError' , response);
-						}
-						this.loading = false
-						this.ready = true
-					},
-					function (response) {
-						this.loading = false;
-						this.$root.$emit('requestError' , response);
-					});
-				}
-			},	
-			filterGroup: function(){
-				var filters = {};
-				this.filterMsgs = [];
-				this.filter(filters);
-			},
-      rejectPickup : function(id){
-						var apiurl = setApiUrl('components/rejectPickup/'+id);
-						this.$http.get( apiurl).then(function (response) {
-							console.log(response)
-							this.load()
-						},
-						function (response) {
-							console.log(response)
-						});
-					},
-					acceptPickup : function(id){
-						var apiurl = setApiUrl('components/acceptPickup/'+id);
-						this.$http.get( apiurl).then(function (response) {
-							console.log(response)
-							this.load()
-						},
-						function (response) {
-							console.log(response)
-						});
-					},
-					startPickup : function(id){
-						var apiurl = setApiUrl('components/startPickup/'+id);
-						this.$http.get( apiurl).then(function (response) {
-							console.log(response)
-							this.load()
-						},
-						function (response) {
-							console.log(response)
-						});
-					},
-          setPaymentInfo : function(val){
-            console.log(val)
-						this.paymentsinfo=val;
-            $('#openPaymentInfoModal').modal();
-					},
-					confirmPayment : function(id){
-						var apiurl = setApiUrl('components/confirmPayment/'+id);
-						this.$http.get( apiurl).then(function (response) {
-							console.log(response)
-              //$('#openPaymentInfoModal').modal("hide");
-							this.load()
-						},
-						function (response) {
-							console.log(response)
-						});
-					},
-					driverStatus : function(id){
-						var apiurl = setApiUrl('components/driverStatus/'+id);
-						this.$http.get( apiurl).then(function (response) {
-							console.log(response)
-							this.load()
-						},
-						function (response) {
-							console.log(response)
-						});
-					},
-          cancelPickup : function(id){
-						var apiurl = setApiUrl('components/cancelPickup/'+id);
-						this.$http.get( apiurl).then(function (response) {
-							console.log(response)
-							this.load()
-						},
-						function (response) {
-							console.log(response)
-						});
-					},
+<style scoped>
+  /* Hero Section Styling */
+  .hero-section {
+    background-color: #fff;
+    padding: 60px 0;
+    position: relative;
+    overflow: hidden;
+  }
 
-				},
-				mounted : function() {
-					this.ready = true;
-				},
-			});
-		</script>
-	
+  .hero-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content .welcome-text {
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .hero-headline {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.2;
+    color: #212529;
+  }
+
+  .hero-headline .highlight-text {
+    color: #28a745;
+  }
+
+  .hero-subheadline {
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+
+  /* How It Works Section Styling */
+  .how-it-work-section {
+    margin-top: 100px;
+    background-color: #4FD675;
+    position: relative;
+  }
+
+  .how-it-work-section h2 {
+    font-weight: 900;
+    font-size: 3rem;
+    color: #ffffff;
+    padding-bottom: 25px;
+  }
+
+  .how-it-work-item .icon-circle {
+    width: 90px;
+    height: 90px;
+    font-size: 3rem;
+    background-color: #e8f5e9;
+    color: #28a745;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    transition: all 0.3s ease;
+  }
+
+  .how-it-work-item:hover .icon-circle {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .how-it-work-item h4 {
+    font-weight: 600;
+    color: #fff;
+    font-size: 1.5rem;
+  }
+
+  .how-it-work-item p.text-muted {
+    color: #e8f5e9 !important;
+  }
+
+  /* SVG Shape Divider CSS */
+  .custom-shape-divider-bottom-1760106560 {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+  }
+
+  .custom-shape-divider-bottom-1760106560 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 150px;
+  }
+
+  .custom-shape-divider-bottom-1760106560 .shape-fill {
+    fill: #4FD675;
+  }
+
+  /* New Styles for Request Cards */
+  .widget-title {
+    font-weight: 800;
+    margin: 2rem 0;
+    font-size: 2rem;
+  }
+
+  .request-card {
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+  }
+
+  .request-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+  }
+
+  .request-card .card-header {
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .request-card .card-header h5 {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .request-card .location-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .request-card .location-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    width: 30px;
+    text-align: center;
+  }
+
+  .request-card .location-icon.from {
+    color: #28a745;
+  }
+
+  .request-card .location-icon.to {
+    color: #dc3545;
+  }
+
+  .request-card .card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .empty-state-card {
+    background-color: #fff;
+    border: 1px dashed #ced4da;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 991.98px) {
+    .hero-headline {
+      font-size: 2.5rem;
+    }
+
+    .hero-section {
+      padding-top: 40px;
+      padding-bottom: 0;
+    }
+
+    .hero-image-container {
+      text-align: center;
+    }
+
+    .delivery-illustration img {
+      max-width: 350px;
+    }
+  }
+</style>

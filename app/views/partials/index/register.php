@@ -1,5 +1,5 @@
 <template id="Register">
-    <div>
+    <div class="main-container">
         <section class="section-sm">
             <div class="container">
                 <div class="row">
@@ -77,7 +77,7 @@
 
                                 <div style="margin-top: 12px; text-align: center;">
                                     Already have an account?
-                                    <router-link to="/">Login</router-link>
+                                    <router-link to="/login">Login</router-link>
                                 </div>
 
                             </form>
@@ -161,3 +161,12 @@
         mounted: function() {},
     });
 </script>
+<style scoped>
+    .main-container {
+        background-color: #FFFFFF;
+        background-image: radial-gradient(#28a745 1.1px, transparent 1.1px), radial-gradient(#28a745 1.1px, #FFFFFF 1.1px);
+        background-size: 44px 44px;
+        background-position: 0 0, 22px 22px;
+        padding-bottom: 100px;
+    }
+</style>

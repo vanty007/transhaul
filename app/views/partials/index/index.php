@@ -1,5 +1,5 @@
-<template id="Index">
-	<div>
+<template id="Login">
+	<div class="main-container">
 		<section class="section-sm">
 			<div class="container">
 				<div class="row">
@@ -53,8 +53,8 @@
 	</div>
 </template>
 <script>
-	var IndexComponent = Vue.component('IndexComponent', {
-		template: '#Index',
+	var LoginComponent = Vue.component('LoginComponent', {
+		template: '#Login',
 		data: function() {
 			return {
 				user: {
@@ -88,8 +88,8 @@
 					},
 					function(response) {
 						this.loading = false;
-						this.showError = false
-						this.errorMsg = response.statusText;
+						this.showError = false;
+						this.errorMsg = response.statusText ? response.statusText : "Invalid username or password";
 						//Flashes messages
 						setTimeout(function() {
 							self.showError = true;
@@ -102,3 +102,12 @@
 		},
 	});
 </script>
+<style scoped>
+	.main-container {
+		background-color: #FFFFFF;
+		background-image: radial-gradient(#28a745 1.1px, transparent 1.1px), radial-gradient(#28a745 1.1px, #FFFFFF 1.1px);
+		background-size: 44px 44px;
+		background-position: 0 0, 22px 22px;
+		padding-bottom: 100px;
+	}
+</style>

@@ -107,58 +107,55 @@ $navbarsideleft = array(
 	<header class="navigation fixed-top">
 		<div class="container">
 			<nav class="navbar navbar-expand-lg navbar-white">
-				<a class="navbar-brand order-1" href="index.html">
+				<a class="navbar-brand" href="index.html">
 					<img class="img-fluid" width="100px" src="lib/images/logo.png"
 						alt="Reader | Hugo Personal Blog Template">
 				</a>
-				<div class="collapse navbar-collapse text-center order-lg-2 order-3" id="navigation">
-					<ul class="navbar-nav mx-auto">
-						<?php
-						if (user_login_status() == true) {
-						?>
+
+				<button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+					<i class="ti-menu"></i>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navigation">
+					<?php
+					if (user_login_status() == true) {
+					?>
+						<ul class="navbar-nav mx-auto">
 							<li class="nav-item">
 								<a class="nav-link" href="">Home</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#trackitems">Track Delivery Items</a>
 							</li>
-							<!--<li class="nav-item">
-            	<a class="nav-link" href="">Items in Transit</a>
-          </li>-->
 							<li class="nav-item">
 								<a class="nav-link" href="#payments">Payments History</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="info/contact">Contact Us</a>
 							</li>
-							<!--<li class="nav-item">
-            	<a class="nav-link" href="<?php print_link('index/logout?csrf_token=' . Csrf::$token) ?>"><i class="fa fa-sign-out"></i> Logout</a>
-          </li>-->
-						<?php } ?>
-				</div>
-				<?php
-				if (user_login_status() == true) {
-				?>
-					<div class="order-2 order-lg-3 d-flex align-items-center">
+						</ul>
 
-						<!-- search -->
-						<form class="search-bar">
-							<input id="search-query" name="s" type="search" placeholder="Enter Tracking ID">
-						</form>
-
-						<button class="navbar-toggler border-0 order-1" type="button" data-toggle="collapse" data-target="#navigation">
-							<i class="ti-menu"></i>
-						</button>
-
-						<div class="nav-item nav-logout">
-							<a class="nav-link" href="<?php print_link('index/logout?csrf_token=' . Csrf::$token) ?>"><i class="fa fa-sign-out"></i> Logout</a>
+						<div class="d-flex align-items-center">
+							<form class="search-bar">
+								<input id="search-query" name="s" type="text" placeholder="Enter Tracking ID">
+							</form>
+							<div class="nav-item nav-logout">
+								<a class="nav-link" href="<?php print_link('index/logout?csrf_token=' . Csrf::$token) ?>"><i class="fa fa-sign-out"></i> Logout</a>
+							</div>
 						</div>
-					</div>
-
-
+					<?php } else { ?>
+						<ul class="navbar-nav ml-auto">
+							<li class="nav-item">
+								<router-link to="/login" class="nav-link">Login</router-link>
+							</li>
+							<li class="nav-item">
+								<router-link to="/register" class="nav-link">Register</router-link>
+							</li>
+						</ul>
+					<?php } ?>
+				</div>
 			</nav>
 		</div>
-	<?php } ?>
 	</header>
 </template>
 

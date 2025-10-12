@@ -9,9 +9,10 @@ VERSION:	Versoin Number
 -------------------------------------------------------------------*/
 /*  typography */
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
 body {
   line-height: 1.7;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #555;
   font-size: 15px;
@@ -98,6 +99,13 @@ h6,
   background: #4fd675;
   color: #fff;
   border-color: #4fd675;
+}
+
+.btn-xs {
+  font-size: 12px;
+  padding: 7px 14px;
+  line-height: 1.1;
+  min-width: unset;
 }
 
 .btn-primary:active,
@@ -370,7 +378,6 @@ mark {
   font-family: "Nunito Sans", sans-serif;
   font-weight: 600;
   white-space: nowrap;
-
 }
 
 .navbar-white .navbar-nav .nav-link {
@@ -1529,6 +1536,216 @@ mark {
   fill: #4fd675;
 }
 
+/* Modern Footer Styles */
+.modern-footer {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ffffff;
+  padding: 60px 0 0;
+  margin-top: 80px;
+  position: relative;
+}
+
+.modern-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4fd675 0%, #3bc55a 100%);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-brand {
+  margin-bottom: 20px;
+}
+
+.brand-logo {
+  margin-bottom: 15px;
+}
+
+.logo-img {
+  height: 50px;
+  width: auto;
+  max-width: 200px;
+  filter: brightness(0) invert(1);
+  transition: all 0.3s ease;
+}
+
+.logo-img:hover {
+  filter: brightness(0) saturate(100%) invert(60%) sepia(100%) saturate(1000%)
+    hue-rotate(90deg) brightness(1.2);
+  transform: scale(1.05);
+}
+
+.brand-tagline {
+  color: #bdc3c7;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer-title {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+
+.footer-links a:hover {
+  color: #4fd675;
+  transform: translateX(5px);
+}
+
+.footer-links a::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 2px;
+  background: #4fd675;
+  transition: width 0.3s ease;
+}
+
+.footer-links a:hover::before {
+  width: 10px;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(79, 214, 117, 0.1);
+  border: 2px solid rgba(79, 214, 117, 0.3);
+  border-radius: 50%;
+  color: #4fd675;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.social-link:hover {
+  background: #4fd675;
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(79, 214, 117, 0.3);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(189, 195, 199, 0.2);
+  padding: 30px 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.copyright {
+  color: #bdc3c7;
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-bottom-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: #4fd675;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .footer-links a:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-footer {
+    padding: 40px 0 0;
+  }
+
+  .footer-content {
+    gap: 25px;
+  }
+
+  .logo-img {
+    height: 40px;
+  }
+}
+
+/* Legacy footer styles for backward compatibility */
 .footer {
   padding: 120px 0 50px;
   background-image: url(../images/backgrounds/footer-bg.svg);
