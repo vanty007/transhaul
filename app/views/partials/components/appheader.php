@@ -107,10 +107,10 @@ $navbarsideleft = array(
 	<header class="navigation fixed-top">
 		<div class="container">
 			<nav class="navbar navbar-expand-lg navbar-white">
-				<a class="navbar-brand" href="index.html">
+				<router-link to="/" class="navbar-brand">
 					<img class="img-fluid" width="100px" src="lib/images/logo.png"
 						alt="Reader | Hugo Personal Blog Template">
-				</a>
+				</router-link>
 
 				<button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
 					<i class="ti-menu"></i>
@@ -145,6 +145,12 @@ $navbarsideleft = array(
 						</div>
 					<?php } else { ?>
 						<ul class="navbar-nav ml-auto">
+							<li class="nav-item">
+								<router-link to="/" class="nav-link">Home</router-link>
+							</li>
+							<li class="nav-item">
+								<a href="info/contact" class="nav-link">Contact Us</a>
+							</li>
 							<li class="nav-item">
 								<router-link to="/login" class="nav-link">Login</router-link>
 							</li>
