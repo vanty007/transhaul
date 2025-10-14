@@ -172,7 +172,7 @@ class Pickup_RequestController extends SecureController{
 				'delivery_option_id' => 'required|numeric',
 				'totalamount' => 'required',
 			);
-			$modeldata['pickup_userid'] = $USER_ID;
+			$modeldata['pickup_userid'] = USER_ID;
 			$modeldata['tracking_id'] = 'TRA'.rand(10000,99999);
 			$modeldata['pickup_code'] = rand(1000,9999);
 			$is_valid = GUMP::is_valid($modeldata, $rules_array);

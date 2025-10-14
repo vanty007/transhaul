@@ -117,7 +117,7 @@ class UserController extends SecureController{
 			$modeldata=transform_request_data($_POST);
 			$rules_array = array(
 				'email' => 'required|valid_email',
-				'phoneno' => 'required',
+				'phoneno' => 'required|numeric|max_len,15',
 				'password' => 'required',
 				'role_id' => 'required',
 				'firstname' => 'required',

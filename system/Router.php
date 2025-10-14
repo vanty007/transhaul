@@ -115,7 +115,7 @@ class Router{
 		$url_segment = array_map('urldecode' , explode("/" , rtrim( $url , "/" ) ) );
 
 		$part1=strtolower(!empty($url_segment[0]) ? $url_segment[0] : DEFAULT_PAGE);
-		$part2=strtolower((!empty($url_segment[1]) ? $url_segment[1] : null));
+		$part2=strtolower((!empty($url_segment[1]) ? $url_segment[1] : ""));
 		$part3=(!empty($url_segment[2]) ? $url_segment[2] : null);
 		$part4=(!empty($url_segment[3]) ? $url_segment[3] : null);
 		
