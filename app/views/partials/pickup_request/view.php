@@ -145,25 +145,26 @@
 									<p><strong>Notes:</strong> {{ data.notes || 'No special instructions.' }}</p>
 								</div>
 							</div>
-
-							<div class="card mb-4" v-if="data.driver_id != null">
-								<div class="card-header">
-									<h5 class="mb-0">Rider Information</h5>
-								</div>
-								<div class="card-body">
-									<div class="row align-items-center">
-										<div class="col-md-8">
-											<p class="font-weight-bold mb-1"><i class="ti-user"></i> {{data.firstname}} {{data.lastname}}</p>
-											<p class="text-muted mb-0"><i class="ti-mobile"></i> {{ data.phoneno }}</p>
-										</div>
-										<div class="col-md-4 text-md-right mt-3 mt-md-0">
-											<a :href="'tel:'+ data.phoneno" class="btn btn-success"><i class="ti-mobile"></i> Call Rider</a>
+							
+							<?php if (ROLE_ID == "user") { ?>
+								<div class="card mb-4" v-if="data.driver_id != null">
+									<div class="card-header">
+										<h5 class="mb-0">Rider Information</h5>
+									</div>
+									<div class="card-body">
+										<div class="row align-items-center">
+											<div class="col-md-8">
+												<p class="font-weight-bold mb-1"><i class="ti-user"></i> {{data.firstname}} {{data.lastname}}</p>
+												<p class="text-muted mb-0"><i class="ti-mobile"></i> {{ data.phoneno }}</p>
+											</div>
+											<div class="col-md-4 text-md-right mt-3 mt-md-0">
+												<a :href="'tel:'+ data.phoneno" class="btn btn-success"><i class="ti-mobile"></i> Call Rider</a>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 
-							<?php if (ROLE_ID == "user") { ?>
+
 								<div class="card mb-4" v-if="data.pickup_status == 3">
 									<div class="card-body text-center">
 										<div v-if="data.rate == 0">

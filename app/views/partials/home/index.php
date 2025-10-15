@@ -89,7 +89,7 @@
                 <article class="card request-card mb-4" v-if="(data.records.pickup_status == 0 || data.records.pickup_status == 1)">
                   <div class="card-header bg-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="ti-package mr-2"></i> {{data.records.item_name}}</h5>
-                    <span class="badge badge-light p-2">#{{data.records.tracking_id}}</span>
+                    <span class="info-badge badge-light p-2">#{{data.records.tracking_id}}</span>
                   </div>
                   <div class="card-body">
                     <div class="row">
@@ -188,9 +188,12 @@
             <div v-if="records.length">
               <div v-for="(data,index) in records">
                 <article class="card request-card mb-4" v-if="(data.records.pickup_status == 0 || data.records.pickup_status == 1) && driver_status==1 && data.records.driver_id == <?php echo USER_ID; ?>">
-                  <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0"><i class="ti-package mr-2"></i> {{data.records.item_name}}</h5>
-                    <span class="badge badge-light p-2"><i class="ti-ruler-alt-2 mr-1"></i> {{data.records.distance}}</span>
+                  <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap">
+                    <h5 class="mb-0 mr-2"><i class="ti-package mr-2"></i> {{data.records.item_name}}</h5>
+                    <div class="d-flex align-items-center">
+                      <span class="info-badge badge-light p-2 mr-2"><i class="ti-ruler-alt-2 mr-1"></i> {{data.records.distance}}</span>
+                      <span class="info-badge badge-success p-2">₦{{data.records.totalamount}}</span>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div class="row">
@@ -217,13 +220,20 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-footer text-right">
-                    <div v-if="data.records.pickup_status == 0" class="btn-group w-100">
-                      <button @click="rejectPickup(data.records.id)" class="btn btn-outline-danger w-50">Reject</button>
-                      <button @click="acceptPickup(data.records.id)" class="btn btn-success w-50">Accept</button>
+                  <div class="card-footer d-flex justify-content-between align-items-center">
+                    <div>
+                      <router-link :to="'/pickup_request/view/' + data.records.id" class="btn btn-xs btn-outline-primary">
+                        <i class="ti-eye"></i> View Details
+                      </router-link>
                     </div>
-                    <div v-if="data.records.pickup_status == 1">
-                      <button @click="startPickup(data.records.id)" class="btn btn-info btn-block">Start Journey</button>
+                    <div class="text-right flex-grow-1">
+                      <div v-if="data.records.pickup_status == 0" class="btn-group">
+                        <button @click="rejectPickup(data.records.id)" class="btn btn-outline-danger">Reject</button>
+                        <button @click="acceptPickup(data.records.id)" class="btn btn-success">Accept</button>
+                      </div>
+                      <div v-if="data.records.pickup_status == 1">
+                        <button @click="startPickup(data.records.id)" class="btn btn-info">Start Journey</button>
+                      </div>
                     </div>
                   </div>
                 </article>
@@ -635,5 +645,14 @@
     .delivery-illustration img {
       max-width: 350px;
     }
+  }
+
+  .info-badge {
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 </style>
