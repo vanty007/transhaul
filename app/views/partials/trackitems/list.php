@@ -4,7 +4,29 @@
     <?php if (ROLE_ID == "user") { ?>
 
       <div id="openPaymentModal" class="modal fade" role="dialog"> ... </div>
-      <div id="openReviewModal" class="modal fade" role="dialog"> ... </div>
+      <div id="openReviewModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Rate this Pick Up</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="display: grid;justify-content: center;align-items: center;">
+              <div class="container text-center">
+                <ul class="card-meta list-inline mb-3">
+                  <li class="list-inline-item">
+                    <i v-for="(star, index) in 5" :key="index" class="fa fa-star list-inline-item" :style="{color: index < selectedStars ? 'gold' : '#ccc',fontSize: '40px' }" @click="toggleStar(index)"></i>
+                  </li>
+                </ul>
+                <button @click="sendReview()" class="btn btn-primary" type="button">Submit Rating</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <section class="page-header">
         <div class="container">
@@ -77,7 +99,9 @@
                     <span v-if="data.records.pickup_status == 3">Delivered</span>
                   </div>
                   <div class="action-group">
-                    <a href="#" @click="showPopOpenReviewModal(data.records.id)" class="btn btn-xs btn-outline-primary" v-if="data.records.pickup_status == 3 && data.records.rate == 0"><i class="ti-star"></i> Rate Delivery</a>
+                    <button type="button" @click="showPopOpenReviewModal(data.records.id)" class="btn btn-xs btn-outline-primary" v-if="data.records.pickup_status == 3 && data.records.rate == 0">
+                      <i class="ti-star"></i> Rate Delivery
+                    </button>
                     <div v-if="data.records.pickup_status == 3 && data.records.rate != 0">
                       <i v-for="(star, index) in data.records.rate" :key="index" class="ti-star" style="color: gold; font-size: 1.2rem;"></i>
                     </div>
@@ -511,25 +535,20 @@
         }
       },
       sendReview: function() {
-        //var payload = this.message;
-        console.log(this.reviewid + " " + this.reviewcomment + " " + this.selectedStars)
-        if (!this.reviewid || !this.reviewcomment || this.selectedStars == 0) {
-          alert("Please fill up the review and rating items")
+        console.log(this.reviewid + " " + this.selectedStars)
+        if (!this.reviewid || this.selectedStars == 0) {
+          alert("Please select a star rating")
         } else {
-          var payload_json = '{"review": "' + this.reviewcomment + '","rate": "' + this.selectedStars + '"}';
-          console.log(payload_json)
+          var payload_json = '{"rate": "' + this.selectedStars + '"}';
           this.loading1 = true;
           var self = this;
           var apiurl = setApiUrl('Pickup_request/edit/' + this.reviewid);
           this.$http.post(apiurl, payload_json).then(function(response) {
-              console.log(response)
               this.load()
               $('#openReviewModal').modal("hide");
             },
             function(response) {
-              console.log(response)
               $('#openReviewModal').modal("hide");
-              //Flashes messages
               setTimeout(function() {
                 self.showError = false;
               }, 100);
